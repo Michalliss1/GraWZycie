@@ -1,0 +1,85 @@
+﻿<Window x:Class="GraWZycie.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Gra w Życie" Height="650" Width="900">
+
+    <Window.Resources>
+        <!-- SZABLON KOMÓRKI KWADRAT -->
+        <Style x:Key="CellStyle" TargetType="Rectangle">
+            <Setter Property="Fill" Value="Lime"/>
+            <Setter Property="Stroke" Value="#111"/>
+            <Setter Property="StrokeThickness" Value="1"/>
+        </Style>
+
+        <!-- SZABLON KOMÓRKI KÓŁKO -->
+        <Style x:Key="CellEllipseStyle" TargetType="Ellipse">
+            <Setter Property="Fill" Value="Lime"/>
+            <Setter Property="Stroke" Value="#111"/>
+            <Setter Property="StrokeThickness" Value="1"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="#222">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- PANEL STEROWANIA -->
+        <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Auto">
+            <WrapPanel Margin="10">
+                <Button Content="Start" Width="70" Margin="5" Click="StartButton_Click"/>
+                <Button Content="Stop" Width="70" Margin="5" Click="StopButton_Click"/>
+                <Button Content="Krok" Width="70" Margin="5" Click="StepButton_Click"/>
+                <Button Content="Wyczyść" Width="80" Margin="5" Click="ClearButton_Click"/>
+                <Button Content="Losuj" Width="70" Margin="5" Click="RandomButton_Click"/>
+                <Button Content="Zapisz" Width="70" Margin="5" Click="SaveButton_Click"/>
+                <Button Content="Wczytaj" Width="80" Margin="5" Click="LoadButton_Click"/>
+                <Button Content="Zoom" Width="70" Margin="5" Click="ZoomButton_Click"/>
+
+                <StackPanel Margin="20,0,0,0">
+                    <TextBlock Text="Prędkość" Foreground="White"/>
+                    <Slider x:Name="SpeedSlider" Minimum="50" Maximum="500" Value="150" Width="120"
+                            ValueChanged="SpeedSlider_ValueChanged"/>
+                </StackPanel>
+
+                <StackPanel Margin="20,0,0,0">
+                    <TextBlock Text="Plansza" Foreground="White"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox x:Name="RowsBox" Width="50" Text="100" Margin="3"/>
+                        <TextBox x:Name="ColsBox" Width="50" Text="100" Margin="3"/>
+                        <Button Content="Ustaw" Click="ResizeBoard_Click" Margin="5"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Margin="20,0,0,0">
+                    <TextBlock Text="Styl" Foreground="White"/>
+                    <ComboBox x:Name="StyleBox" Width="120" SelectedIndex="0">
+                        <ComboBoxItem Content="Kwadraty"/>
+                        <ComboBoxItem Content="Kółka"/>
+                    </ComboBox>
+                </StackPanel>
+            </WrapPanel>
+        </ScrollViewer>
+
+        <!-- PLANSZA -->
+        <Border Grid.Row="1" Background="Black" BorderBrush="Gray" BorderThickness="1" ClipToBounds="True">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <Canvas x:Name="BoardCanvas" Background="Black"
+                        MouseDown="BoardCanvas_MouseDown"
+                        MouseMove="BoardCanvas_MouseMove"/>
+            </ScrollViewer>
+        </Border>
+
+        <!-- STATYSTYKI -->
+        <Border Grid.Row="2" Background="#222" Padding="5">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="GenText" Foreground="White" Margin="10"/>
+                <TextBlock x:Name="AliveText" Foreground="Lime" Margin="10"/>
+                <TextBlock x:Name="BornText" Foreground="Yellow" Margin="10"/>
+                <TextBlock x:Name="DeadText" Foreground="Red" Margin="10"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
